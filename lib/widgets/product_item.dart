@@ -44,9 +44,12 @@ class ProductItem extends StatelessWidget {
               },
               converter: (store) => store.state),
         ),
-        child: Image.network(
-          pictureUrl,
-          fit: BoxFit.cover,
+        child: Hero(
+          tag: item,
+          child: Image.network(
+            pictureUrl,
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );

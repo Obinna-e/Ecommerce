@@ -12,12 +12,27 @@ import '../models/app_state.dart';
 /*User Actions */
 ThunkAction<AppState> getUserAction = (Store<AppState> store) async {
   final prefs = await SharedPreferences.getInstance();
+  /*Above done first to collect instance and process logged in save on local 
+  phone */
   final String storedUser = prefs.getString('user');
   // final user = storedUser != null ? json.decode(storedUser) : null; old way
   final user =
       storedUser != null ? User.fromJson(json.decode(storedUser)) : null;
   store.dispatch(GetUserAction(user));
 };
+ThunkAction<AppState> logoutUserAction = (Store<AppState> store) async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.remove('user');
+  User user;
+  store.dispatch(LogoutUserAction(user));
+};
+
+class LogoutUserAction {
+  final User _user;
+  User get user => this._user;
+
+  LogoutUserAction(this._user);
+}
 
 class GetUserAction {
   final User _user;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce/pages/cart_page.dart';
 import 'package:flutter_ecommerce/redux/actions.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
@@ -41,14 +42,14 @@ class MyApp extends StatelessWidget {
             bodyText2: TextStyle(fontSize: 18.0),
           ),
         ),
-        home: RegisterPage(),
         routes: {
           '/login': (BuildContext context) => LoginPage(),
           '/register': (BuildContext context) => RegisterPage(),
-          '/products': (BuildContext context) => ProductsPage(onInit: () {
+          '/': (BuildContext context) => ProductsPage(onInit: () {
                 StoreProvider.of<AppState>(context).dispatch(getUserAction);
                 StoreProvider.of<AppState>(context).dispatch(getProductsAction);
               }),
+          '/cart': (BuildContext context) => CartPage(),
         },
       ),
     );

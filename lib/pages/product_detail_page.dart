@@ -9,6 +9,7 @@ class ProductDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String pictureUrl = 'http://localhost:1337${item.picture[0].url}';
+    final Orientation orientation = MediaQuery.of(context).orientation;
     return Scaffold(
       appBar: AppBar(
         title: Text(item.name),
@@ -19,7 +20,15 @@ class ProductDetailPage extends StatelessWidget {
           children: [
             Padding(
               padding: EdgeInsets.only(bottom: 10.0),
-              child: Image.network(pictureUrl, fit: BoxFit.cover),
+              child: Hero(
+                tag: item,
+                child: Image.network(
+                  pictureUrl,
+                  fit: BoxFit.cover,
+                  width: orientation == Orientation.portrait ? 600 : 250,
+                  height: orientation == Orientation.portrait ? 400 : 200,
+                ),
+              ),
             ),
             Text(
               item.name,

@@ -17,6 +17,11 @@ User userReducer(User user, dynamic action) {
     return action.user;
   }
   //check if given action is an instance of a class{}
+  else if (action is LogoutUserAction) {
+    return action.user;
+    /*same as with GetUserAction, but user value is different, 
+        because user retreived from actions and passed here is different */
+  }
   return user;
 }
 
