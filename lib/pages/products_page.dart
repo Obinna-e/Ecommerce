@@ -70,6 +70,7 @@ class _ProductsPageState extends State<ProductsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final Orientation orientation = MediaQuery.of(context).orientation;
     return Scaffold(
       appBar: _appBar,
       body: Container(
@@ -81,14 +82,20 @@ class _ProductsPageState extends State<ProductsPage> {
                     Expanded(
                       child: SafeArea(
                         child: GridView.builder(
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                            ), //Grid with fixed no of columns
-                            itemCount: state.products.length,
-                            itemBuilder: (context, i) => ProductItem(
-                                  item: state.products[i],
-                                )),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount:
+                                orientation == Orientation.portrait ? 2 : 3,
+                            mainAxisSpacing: 4.0,
+                            crossAxisSpacing: 4.0,
+                            childAspectRatio:
+                                orientation == Orientation.portrait ? 1.0 : 1.3,
+                          ), //Grid with fixed no of columns
+                          itemCount: state.products.length,
+                          itemBuilder: (context, i) => ProductItem(
+                            item: state.products[i],
+                          ),
+                        ),
                         top: false,
                         bottom: false,
                       ),
