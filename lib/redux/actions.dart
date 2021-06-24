@@ -69,3 +69,36 @@ class GetProductsAction {
 
   GetProductsAction(this._products);
 }
+
+/*Cart Product Actions */
+
+ThunkAction<AppState> toggleCartProductAction(Product cartProduct) {
+  return (Store<AppState> store) {
+    final List<Product> cartProducts = store.state.cartProducts;
+    //get assess to current state of cart products
+    final int index =
+        cartProducts.indexWhere((product) => product.id == cartProduct.id);
+    //check the current list of products and see if an instance of cart products exists
+    bool isInCart = index > -1 == true;
+    List<Product> updatedCartProducts = List.from(cartProducts);
+    if (isInCart) {
+      updatedCartProducts.removeAt(index);
+      /*could have removed directly with cartProducts.removeAt()
+      but we don't want to mutate with actions, so make copy and update to copy 
+      instead. List cartProducts is final*/
+    } else {
+      updatedCartProducts.add(cartProduct);
+    }
+    store.dispatch(
+      ToggleCartProductAction(updatedCartProducts),
+    );
+  };
+}
+
+class ToggleCartProductAction {
+  final List<Product> _cartProducts;
+
+  List<Product> get cartProducts => this._cartProducts;
+
+  ToggleCartProductAction(this._cartProducts);
+}

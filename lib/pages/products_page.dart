@@ -46,7 +46,12 @@ class _ProductsPageState extends State<ProductsPage> {
       builder: (context, state) {
         return AppBar(
           centerTitle: true,
-          leading: state.user != null ? Icon(Icons.store) : Text(''),
+          leading: state.user != null
+              ? IconButton(
+                  icon: Icon(Icons.store),
+                  onPressed: () => Navigator.pushNamed(context, '/cart'),
+                )
+              : Text(''),
           title: SizedBox(
             child: state.user != null
                 ? Text(state.user.username)
@@ -88,37 +93,37 @@ class _ProductsPageState extends State<ProductsPage> {
     return Scaffold(
       appBar: _appBar,
       body: Container(
-          decoration: gradientBackground,
-          child: StoreConnector<AppState, AppState>(
-              builder: (_, state) {
-                return Column(
-                  children: [
-                    Expanded(
-                      child: SafeArea(
-                        child: GridView.builder(
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount:
-                                orientation == Orientation.portrait ? 2 : 3,
-                            mainAxisSpacing: 4.0,
-                            crossAxisSpacing: 4.0,
-                            childAspectRatio:
-                                orientation == Orientation.portrait ? 1.0 : 1.3,
-                          ), //Grid with fixed no of columns
-                          itemCount: state.products.length,
-                          itemBuilder: (context, i) => ProductItem(
-                            item: state.products[i],
-                          ),
+        decoration: gradientBackground,
+        child: StoreConnector<AppState, AppState>(
+            builder: (_, state) {
+              return Column(
+                children: [
+                  Expanded(
+                    child: SafeArea(
+                      child: GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount:
+                              orientation == Orientation.portrait ? 2 : 3,
+                          mainAxisSpacing: 4.0,
+                          crossAxisSpacing: 4.0,
+                          childAspectRatio:
+                              orientation == Orientation.portrait ? 1.0 : 1.3,
+                        ), //Grid with fixed no of columns
+                        itemCount: state.products.length,
+                        itemBuilder: (context, i) => ProductItem(
+                          item: state.products[i],
                         ),
-                        top: false,
-                        bottom: false,
                       ),
+                      top: false,
+                      bottom: false,
                     ),
-                  ],
-                );
-              } //Most times context not needed so '_' can replace it
-              ,
-              converter: (store) => store.state)),
+                  ),
+                ],
+              );
+            } //Most times context not needed so '_' can replace it
+            ,
+            converter: (store) => store.state),
+      ),
     );
   }
   //   return StoreConnector<AppState, AppState>(

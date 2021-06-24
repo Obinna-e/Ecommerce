@@ -6,13 +6,19 @@ import 'package:meta/meta.dart';
 class AppState {
   final User user;
   final List<Product> products;
+  final List<Product> cartProducts;
 
-  AppState({@required this.user, @required this.products});
+  AppState({
+    @required this.user,
+    @required this.products,
+    this.cartProducts,
+  });
 
   factory AppState.initial() {
     return AppState(
       user: null,
       products: [],
+      cartProducts: [],
     );
   }
 }
